@@ -9,7 +9,7 @@ namespace Project_Two
             /**Your application should allow the end user to pass end a file path for output 
             * or guide them through generating the file.
             **/
-
+            Console.WriteLine("For the commit");
            
         }
     }
