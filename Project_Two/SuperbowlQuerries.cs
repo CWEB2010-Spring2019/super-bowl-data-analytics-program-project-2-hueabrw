@@ -28,7 +28,11 @@ namespace Project_Two
         public void GenerateTextFile()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string fileName = "Superbowl.txt";
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("Please name your text file:");
+            string fileName = Console.ReadLine() + ".txt";
+            if (fileName == ".txt") { fileName = "SuperbowlStats.txt"; }
             path = Path.Combine(path, fileName);
             using (StreamWriter writer = File.CreateText(path)) {
                 foreach (Superbowl bowl in this.winners)
@@ -47,17 +51,19 @@ namespace Project_Two
         public void GenerateHTMLFile()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            path = Path.Combine(path, "test.html");
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("Please name your html file:");
+            string fileName = Console.ReadLine() + ".html";
+            if(fileName == ".html") { fileName = "SuperbowlStats.html"; }
+            path = Path.Combine(path, fileName);
 
             using (FileStream fs = new FileStream(path, FileMode.Create))
             {
                 using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
                 {
                     w.Write(createHTML());
-                    foreach (Superbowl bowl in this.winners)
-                    {
-                        //w.WriteLine("<p>" + bowl.Year.PadRight(20) + bowl.SuperbowlTitle.PadRight(20) + bowl.Teams[0].TeamName.PadRight(20) + bowl.Teams[1].TeamName.PadRight(20) + "</p>");
-                    }
+                    
                 }
             }
 
