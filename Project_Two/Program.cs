@@ -10,10 +10,11 @@ namespace Project_Two
         {
             //this is the list that the csv file reads into (line by line)
             List<string> rows = new List<string>();
-            using (StreamReader reader = new StreamReader(@"..\..\..\Super_Bowl_Project.csv")) {
+            using (StreamReader reader = new StreamReader(@"..\..\..\Super_Bowl_Project.csv"))
+            {
+                reader.ReadLine();
                 while (!reader.EndOfStream)
                 {
-                    reader.ReadLine();
                     rows.Add(reader.ReadLine());
                 }
             }
@@ -23,7 +24,6 @@ namespace Project_Two
             {
                 superbowls.Add(new Superbowl(row.Split(','))); //passed through as an array of strings
             }
-
             //creates a new query object passing the superbowl objects through
             SuperbowlQuerries queries = new SuperbowlQuerries(superbowls);
 
@@ -86,7 +86,12 @@ namespace Project_Two
                 }
                 //once enter is pressed this means the user selected an option,
                 //so this runs whichever option they highlighted
-                if (highlighted == 1)
+                GenerateFile(highlighted);
+            }
+
+            void GenerateFile(int isHTML)
+            {
+                if (isHTML == 1)
                 {
                     queries.GenerateHTMLFile();
                 }
