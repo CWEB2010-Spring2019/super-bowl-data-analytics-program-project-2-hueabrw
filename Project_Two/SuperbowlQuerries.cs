@@ -50,7 +50,7 @@ namespace Project_Two
                     writer.WriteLine(bowl.Year.PadRight(15) + bowl.SuperbowlTitle.PadRight(15) + bowl.Teams[0].TeamName.PadRight(25) + bowl.Teams[1].TeamName.PadRight(25));
                 }
                 writer.WriteLine(new string('=', 100));
-                writer.WriteLine("Top 5 Attended SuperBowls".PadLeft(10));
+                writer.WriteLine("Top 5 Attended SuperBowls".PadLeft("Top 5 Attended SuperBowls".Count() + 3));
                 writer.WriteLine(new string('=', 100));
                 writer.WriteLine("Year".PadRight(15) + "Winning Team".PadRight(25) + "Losing Team".PadRight(25) + "City".PadRight(15) + "State".PadRight(15) + "Stadium".PadRight(15));
                 writer.WriteLine(new string('-', 100));
@@ -116,30 +116,30 @@ namespace Project_Two
             string listofwinners = "";
             foreach(Superbowl bowl in winners)
             {
-                listofwinners += "<p>" + bowl.Year + ", " + bowl.SuperbowlTitle + ", " + bowl.Teams[0].TeamName + ", " + bowl.Teams[1].TeamName + "</p>";
+                listofwinners += "<tr>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Year + "</td>" + "<td>" + bowl.Teams[0].Qb + "</td>" + "<td>" + bowl.Teams[0].Coach + "</td>" + "<td>" + bowl.Mvp + "</td>" + "<td>" + (bowl.Teams[0].Points - bowl.Teams[1].Points) + "</td>" + "</tr>";
             }
             string listofattended = "";
             foreach (Superbowl bowl in mostAttended)
             {
-                listofattended += "<p>" + bowl.Year + ", " + bowl.Teams[0].TeamName + ", " + bowl.Teams[1].TeamName + ", " + bowl.City + ", " + bowl.State + ", " + bowl.Stadium + "</p>";
+                listofattended += "<tr>" + "<td>" +  bowl.Year + "</td>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Teams[1].TeamName + "</td>" + "<td>" + bowl.City + "</td>" + "<td>" + bowl.State + "</td>" + "<td>" + bowl.Stadium + "</td>" + "</tr>";
             }
             string listofhosts = "";
             foreach (Superbowl bowl in mostHosted)
             {
-                listofhosts += "<p>" + bowl.State + ", " + bowl.Teams[0].TeamName + ", " + bowl.Teams[1].TeamName + "</p>";
+                listofhosts += "<tr>" + "<td>" + bowl.State + "</td>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Teams[1].TeamName + "</td>" + "</tr>";
             }
             string listofmvps = "";
             foreach (Superbowl bowl in MVPs)
             {
-                listofmvps += "<p>" +bowl.Mvp + ", " + bowl.Teams[0].TeamName + ", " + bowl.Teams[1].TeamName + "</p> ";
+                listofmvps += "<tr>" + "<td>" + bowl.Mvp + "</td>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Teams[1].TeamName + "</td>"+"</tr>";
             }
 
             //grabs the html template and replaces placeholders with superbowl information
             string theFile = File.ReadAllText(@"../../../template.html");
-            theFile = theFile.Replace("<p>listofwinners</p>", listofwinners);
-            theFile = theFile.Replace("<p>listofattended</p>", listofattended);
-            theFile = theFile.Replace("<p>listofhosts</p>", listofhosts);
-            theFile = theFile.Replace("<p>listofmvps</p>", listofmvps);
+            theFile = theFile.Replace("listofwinners", listofwinners);
+            theFile = theFile.Replace("listofattended", listofattended);
+            theFile = theFile.Replace("listofhosts", listofhosts);
+            theFile = theFile.Replace("listofmvps", listofmvps);
             return theFile;
         }
     }

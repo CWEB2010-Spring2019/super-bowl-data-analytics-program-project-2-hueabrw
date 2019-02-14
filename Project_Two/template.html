@@ -3,6 +3,21 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
 body {font-family: Arial;}
 
 /* Style the tab */
@@ -57,22 +72,44 @@ body {font-family: Arial;}
 
 <div id="Winners" class="tabcontent">
   <h3>Winners</h3>
-    <p>listofwinners</p>
+  <table>
+      <tr>
+          <th>
+              Team
+          </th>
+          <th>
+              Year
+          </th>
+          <th>
+              Quarterback
+          </th>
+          <th>
+              Coach
+          </th>
+          <th>
+              Most Valueable Player
+          </th>
+          <th>
+              Won by
+          </th>
+      </tr>
+      listofwinners
+  </table>
 </div>
 
 <div id="Most Attended" class="tabcontent">
   <h3>Most Attended</h3>
-    <p>listofattended</p>
+    <table>listofattended</table>
 </div>
 
 <div id="Most Hosted" class="tabcontent">
     <h3>Most Hosted</h3>
-    <p>listofhosts</p>
+    <table>listofhosts</table>
 </div>
 
 <div id="MVP's" class="tabcontent">
     <h3>MVP's</h3>
-    <p>listofmvps</p>
+    <table>listofmvps</table>
 </div>
 
 <script>
