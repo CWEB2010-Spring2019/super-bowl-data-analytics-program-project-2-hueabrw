@@ -50,10 +50,12 @@ namespace Project_Two
 
 
             //redirects user to the text file
-            System.Diagnostics.Process openTXT = new System.Diagnostics.Process();
-            openTXT.StartInfo = new System.Diagnostics.ProcessStartInfo(path)
+            System.Diagnostics.Process openTXT = new System.Diagnostics.Process
             {
-                UseShellExecute = true
+                StartInfo = new System.Diagnostics.ProcessStartInfo(path)
+                {
+                    UseShellExecute = true
+                }
             };
 
             openTXT.Start();
@@ -76,22 +78,24 @@ namespace Project_Two
             {
                 using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
                 {
-                    w.Write(createHTML());
+                    w.Write(CreateHTML());
                     
                 }
             }
 
             //redirects user to the html file
-            System.Diagnostics.Process openHTML = new System.Diagnostics.Process();
-            openHTML.StartInfo = new System.Diagnostics.ProcessStartInfo(path)
+            System.Diagnostics.Process openHTML = new System.Diagnostics.Process
             {
-                UseShellExecute = true
+                StartInfo = new System.Diagnostics.ProcessStartInfo(path)
+                {
+                    UseShellExecute = true
+                }
             };
-
+            
             openHTML.Start();
         }
 
-        private string createHTML()
+        private string CreateHTML()
         {
             //creates html format of the supbowl information
             string listofwinners = "";
