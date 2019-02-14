@@ -46,7 +46,7 @@ namespace Project_Two
             {
                 Console.SetWindowSize(70, 10);
                 Console.SetCursorPosition(10, 2);
-                Console.WriteLine("Welcome to the superbowl analysis file displayer");
+                Console.WriteLine("Welcome to the superbowl statistic file creator");
                 Console.SetCursorPosition(5, 3);
                 Console.WriteLine("Would you like the information in a text file or HTML file?");
 

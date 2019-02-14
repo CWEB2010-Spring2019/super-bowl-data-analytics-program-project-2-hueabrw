@@ -14,11 +14,10 @@ namespace Project_Two
         IEnumerable<Superbowl> mostAttended;
         IEnumerable<Superbowl> mostHosted;
         IEnumerable<Superbowl> MVPs;
-            
         //class construcor
         public SuperbowlQuerries(List<Superbowl> superbowls)
         {
-            this.winners = superbowls.OrderBy(title => title.SuperbowlTitle);
+            this.winners = superbowls;
             this.mostAttended = superbowls.OrderByDescending(attend => attend.Attendance).Take(5);
             this.mostHosted = superbowls.GroupBy(superbowl => superbowl.State).OrderByDescending(hostGroup => hostGroup.Count()).SelectMany(host => host);
             this.MVPs = superbowls.GroupBy(superbowl => superbowl.Mvp).OrderByDescending(mvpGroup => mvpGroup.Count()).SelectMany(mvp => mvp);
@@ -40,20 +39,20 @@ namespace Project_Two
             //writes to file
             using (StreamWriter writer = File.CreateText(path))
             {
-                writer.WriteLine(new string('=', 100));
+                writer.WriteLine(new string('=', 120));
                 writer.WriteLine("Winners".PadLeft(10));
-                writer.WriteLine(new string('=',100));
-                writer.WriteLine("Year".PadRight(15) + "Title".PadRight(15) + "Winning Team".PadRight(25) + "Losing Team".PadRight(25));
-                writer.WriteLine(new string('-', 100));
+                writer.WriteLine(new string('=',120));
+                writer.WriteLine("Team".PadRight(25) + "Year".PadRight(15) + "Quarterback".PadRight(25) + "Coach".PadRight(25) + "MVP".PadRight(25) + "Won by");
+                writer.WriteLine(new string('-', 120));
                 foreach (Superbowl bowl in this.winners)
                 {
-                    writer.WriteLine(bowl.Year.PadRight(15) + bowl.SuperbowlTitle.PadRight(15) + bowl.Teams[0].TeamName.PadRight(25) + bowl.Teams[1].TeamName.PadRight(25));
+                    writer.WriteLine(bowl.Teams[0].TeamName.PadRight(25) + bowl.Year.PadRight(15) + bowl.Teams[0].Qb.PadRight(25) + bowl.Teams[0].Coach.PadRight(25) + bowl.Mvp.PadRight(25) + (bowl.Teams[0].Points - bowl.Teams[1].Points) + " pts");
                 }
-                writer.WriteLine(new string('=', 100));
+                writer.WriteLine(new string('=', 120));
                 writer.WriteLine("Top 5 Attended SuperBowls".PadLeft("Top 5 Attended SuperBowls".Count() + 3));
-                writer.WriteLine(new string('=', 100));
+                writer.WriteLine(new string('=', 120));
                 writer.WriteLine("Year".PadRight(15) + "Winning Team".PadRight(25) + "Losing Team".PadRight(25) + "City".PadRight(15) + "State".PadRight(15) + "Stadium".PadRight(15));
-                writer.WriteLine(new string('-', 100));
+                writer.WriteLine(new string('-', 120));
                 foreach (Superbowl bowl in this.mostAttended)
                 {
                     writer.WriteLine(bowl.Year.PadRight(15) + bowl.Teams[0].TeamName.PadRight(25) + bowl.Teams[1].TeamName.PadRight(25) + bowl.City.PadRight(15) + bowl.State.PadRight(15) + bowl.Stadium.PadRight(15));
@@ -116,7 +115,7 @@ namespace Project_Two
             string listofwinners = "";
             foreach(Superbowl bowl in winners)
             {
-                listofwinners += "<tr>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Year + "</td>" + "<td>" + bowl.Teams[0].Qb + "</td>" + "<td>" + bowl.Teams[0].Coach + "</td>" + "<td>" + bowl.Mvp + "</td>" + "<td>" + (bowl.Teams[0].Points - bowl.Teams[1].Points) + "</td>" + "</tr>";
+                listofwinners += "<tr>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Year + "</td>" + "<td>" + bowl.Teams[0].Qb + "</td>" + "<td>" + bowl.Teams[0].Coach + "</td>" + "<td>" + bowl.Mvp + "</td>" + "<td>" + (bowl.Teams[0].Points - bowl.Teams[1].Points) + " pts</td>" + "</tr>";
             }
             string listofattended = "";
             foreach (Superbowl bowl in mostAttended)

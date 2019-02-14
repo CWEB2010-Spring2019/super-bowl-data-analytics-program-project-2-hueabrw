@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
     h2 {
         font: 600 1.5em/1 'Raleway', sans-serif;
         color: rgba(0,0,0,.5);
@@ -14,27 +14,28 @@
     html {
         overflow-y: scroll;
     }
-table {
+    table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
-}
 
-td, th {
+    }
+    td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-}
 
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
     body {
         
         font-family: 'Orienta', sans-serif;
     }
 
-/* Style the tab */
+    /* Style the tab */
     .tab {
         overflow: hidden;
         position: relative;
@@ -43,8 +44,8 @@ tr:nth-child(even) {
     }
     div.tab-container {
         text-align: center;
-    }
-/* Style the buttons inside the tab */
+        }
+    /* Style the buttons inside the tab */
     .tab button {
         display: inline-block;
         background-color: inherit;
@@ -55,34 +56,32 @@ tr:nth-child(even) {
         padding: 14px 16px;
         transition: 0.3s;
         font-size: 17px;
+        }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+      background-color: #ddd;
     }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
+    /* Create an active/current tablink class */
+    .tab button.active {
+      background-color: #ccc;
+    }
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
+    /* Style the tab content */
+    .tabcontent {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
 </style>
 </head>
 <body>
     <center>
-
         <h2>Superbowl Statistics</h2>
         <p>Click on a tab to look at statistics:</p>
-
-</center>
+    </center>
 <div class="tab">
     <button class="tablinks" onclick="openCategory(event, 'Winners')">Winners</button>
     <button class="tablinks" onclick="openCategory(event, 'Most Attended')">Most Attended</button>
@@ -163,7 +162,7 @@ tr:nth-child(even) {
 </div>
 
 <div id="MVP's" class="tabcontent">
-    <h3>Most Valuable Players</h3>
+    <h3>Most Common MVPs</h3>
     <table>
         <tr>
             <th>
