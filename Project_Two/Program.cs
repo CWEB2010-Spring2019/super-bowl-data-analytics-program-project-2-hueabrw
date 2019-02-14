@@ -8,10 +8,7 @@ namespace Project_Two
     {
         static void Main(string[] args)
         {
-            /**Your application should allow the end user to pass end a file path for output 
-            * or guide them through generating the file.
-            **/
-
+            //this is the list that the csv file reads into (line by line)
             List<string> rows = new List<string>();
             using (StreamReader reader = new StreamReader(@"..\..\..\Super_Bowl_Project.csv")) {
                 while (!reader.EndOfStream)
@@ -20,18 +17,31 @@ namespace Project_Two
                     rows.Add(reader.ReadLine());
                 }
             }
+            //sends each line from the csv file into a list of new superbowl objects.
             List<Superbowl> superbowls = new List<Superbowl>();
             foreach (string row in rows)
             {
-                superbowls.Add(new Superbowl(row.Split(',')));
+                superbowls.Add(new Superbowl(row.Split(','))); //passed through as an array of strings
             }
+
+            //creates a new query object passing the superbowl objects through
             SuperbowlQuerries queries = new SuperbowlQuerries(superbowls);
+
+            //displays the UI
             DisplayPrompt();
+
+            //ends program
             Console.Clear();
 
 
 
 
+
+
+
+            //=======METHODS=======//
+
+            //Displays a prompt
             void DisplayPrompt()
             {
                 Console.SetWindowSize(70, 10);
@@ -39,13 +49,18 @@ namespace Project_Two
                 Console.WriteLine("Welcome to the superbowl analysis file displayer");
                 Console.SetCursorPosition(5, 3);
                 Console.WriteLine("Would you like the information in a text file or HTML file?");
+
                 interact();
             }
 
+            //allows user to interactively select an option
             void interact()
             {
-                bool highlighted = false;
+                //a value to help determine which option is highlighted.
+                int highlighted = 0;
                 ConsoleKey userKey = new ConsoleKey();
+
+                //the interactive part of the code only runs until the user hits enter/selects an option
                 while (userKey != ConsoleKey.Enter)
                 {
                     DisplayOptions(highlighted);
@@ -53,23 +68,25 @@ namespace Project_Two
                     switch (userKey)
                     {
                         case ConsoleKey.A:
-                            highlighted = false;
+                            highlighted = 0;
                             break;
                         case ConsoleKey.D:
-                            highlighted = true;
+                            highlighted = 1;
                             break;
                         case ConsoleKey.RightArrow:
-                            highlighted = true;
+                            highlighted = 1;
                             break;
                         case ConsoleKey.LeftArrow:
-                            highlighted = false;
+                            highlighted = 0;
                             break;
                         default:
                             break;
                     }
                     
                 }
-                if (highlighted)
+                //once enter is pressed this means the user selected an option,
+                //so this runs whichever option they highlighted
+                if (highlighted == 1)
                 {
                     queries.GenerateHTMLFile();
                 }
@@ -79,11 +96,12 @@ namespace Project_Two
                 }
             }
 
-            void DisplayOptions(bool highlighted)
+            //displays the options highlighting the one they are over.
+            void DisplayOptions(int highlighted)
             {
                 Console.CursorVisible = false;
                 Console.SetCursorPosition(7, 5);
-                if (!highlighted)
+                if (highlighted == 0)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.Write("Text File".PadLeft(20));

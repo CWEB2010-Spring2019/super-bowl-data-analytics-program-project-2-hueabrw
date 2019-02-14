@@ -15,6 +15,8 @@ namespace Project_Two
         public string City { get; }
         public string State { get; }
 
+        //Constructor receives one line from the csv file as a list of strings.
+        //knowing the order its in, it creates an instance of the superbowl class.
         public Superbowl(string[] data)
         {
             this.Year = data[0];
