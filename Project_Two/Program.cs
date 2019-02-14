@@ -27,7 +27,7 @@ namespace Project_Two
             }
             SuperbowlQuerries queries = new SuperbowlQuerries(superbowls);
             DisplayPrompt();
-            Console.ReadKey();
+            Console.Clear();
 
 
 
