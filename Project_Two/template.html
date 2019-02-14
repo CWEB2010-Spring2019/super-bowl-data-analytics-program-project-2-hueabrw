@@ -3,6 +3,17 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+    h2 {
+        font: 600 1.5em/1 'Raleway', sans-serif;
+        color: rgba(0,0,0,.5);
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        top: 25%;
+        width: 100%;
+    }
+    html {
+        overflow-y: scroll;
+    }
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -18,26 +29,33 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
-body {font-family: Arial;}
+    body {
+        
+        font-family: 'Orienta', sans-serif;
+    }
 
 /* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
+    .tab {
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+    div.tab-container {
+        text-align: center;
+    }
 /* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-}
+    .tab button {
+        display: inline-block;
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
@@ -60,9 +78,11 @@ body {font-family: Arial;}
 </head>
 <body>
     <center>
+
         <h2>Superbowl Statistics</h2>
         <p>Click on a tab to look at statistics:</p>
-    </center>
+
+</center>
 <div class="tab">
     <button class="tablinks" onclick="openCategory(event, 'Winners')">Winners</button>
     <button class="tablinks" onclick="openCategory(event, 'Most Attended')">Most Attended</button>
@@ -71,7 +91,7 @@ body {font-family: Arial;}
 </div>
 
 <div id="Winners" class="tabcontent">
-  <h3>Winners</h3>
+  <h3>Superbowl Winners</h3>
   <table>
       <tr>
           <th>
@@ -98,18 +118,66 @@ body {font-family: Arial;}
 </div>
 
 <div id="Most Attended" class="tabcontent">
-  <h3>Most Attended</h3>
-    <table>listofattended</table>
+  <h3>Most Attended Superbowls</h3>
+  <table>
+      <tr>
+          <th>
+              Year
+          </th>
+          <th>
+              Winning Team
+          </th>
+          <th>
+              Losing Team
+          </th>
+          <th>
+              City
+          </th>
+          <th>
+              State
+          </th>
+          <th>
+              Stadium
+          </th>
+      </tr>
+      listofattended
+  </table>
 </div>
 
 <div id="Most Hosted" class="tabcontent">
-    <h3>Most Hosted</h3>
-    <table>listofhosts</table>
+    <h3>States That Hosted Most</h3>
+    <table>
+        <tr>
+            <th>
+                City
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                Stadium
+            </th>
+        </tr>
+    listofhosts
+    </table>
 </div>
 
 <div id="MVP's" class="tabcontent">
-    <h3>MVP's</h3>
-    <table>listofmvps</table>
+    <h3>Most Valuable Players</h3>
+    <table>
+        <tr>
+            <th>
+                Most Valuable Player
+            </th>
+            <th>
+                Winning Team
+            </th>
+            <th>
+                Losing Team
+            </th>
+        </tr>
+        listofmvps
+    </table>
 </div>
 
 <script>
