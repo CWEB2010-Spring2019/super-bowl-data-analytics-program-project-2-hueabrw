@@ -6,7 +6,6 @@ namespace Project_Two
 {
     public class Superbowl
     {
-        public List<Team> Teams = new List<Team>();
         public string SuperbowlTitle { get; }
         public string Year { get; }
         public int Attendance { get; }
@@ -14,37 +13,41 @@ namespace Project_Two
         public string Stadium { get; }
         public string City { get; }
         public string State { get; }
-
+        public string WinningCoach { get; }
+        public string WinningQb { get; }
+        public string WinningTeamName { get; }
+        public int WinningPoints { get; }
+        public string LosingCoach { get; }
+        public string LosingQb { get; }
+        public string LosingTeamName { get; }
+        public int LosingPoints { get; }
         //Constructor receives one line from the csv file as a list of strings.
         //knowing the order its in, it creates an instance of the superbowl class.
         public Superbowl(string[] data)
         {
+            for(int i = 0; i < data.Length; i++)
+            {
+                string[] tempStrings = data[i].Split(" ");
+                if (tempStrings.Length > 3)
+                {
+                    data[i] = tempStrings[0] + tempStrings[1] + " & " + tempStrings[2] + tempStrings[3];
+                }
+            }
             this.Year = data[0];
             this.SuperbowlTitle = data[1];
             this.Attendance = Convert.ToInt32(data[2]);
-            Teams.Add(new Team(true, data[3], data[4], data[5], data[6]));
-            Teams.Add(new Team(false, data[7], data[8], data[9], data[10]));
+            this.WinningQb = data[3];
+            this.WinningCoach = data[4];
+            this.WinningTeamName = data[5];
+            this.WinningPoints = Convert.ToInt32(data[6]);
+            this.LosingQb = data[7];
+            this.LosingCoach = data[8];
+            this.LosingTeamName = data[9];
+            this.LosingPoints = Convert.ToInt32(data[10]);
             this.Mvp = data[11];
             this.Stadium = data[12];
             this.City = data[13];
             this.State = data[14];
-        }
-    }
-    public class Team
-    {
-        public string Coach { get; }
-        public string Qb { get; }
-        public string TeamName { get; }
-        public bool IsWinner { get; }
-        public int Points { get; }
-
-        public Team(bool isWinner, string qb, string coach, string teamName, string points)
-        {
-            this.IsWinner = isWinner;
-            this.Qb = qb;
-            this.Coach = coach;
-            this.TeamName = teamName;
-            this.Points = Convert.ToInt32(points);
         }
     }
 }

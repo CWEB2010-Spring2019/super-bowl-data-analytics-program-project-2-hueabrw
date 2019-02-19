@@ -14,6 +14,13 @@ namespace Project_Two
         IEnumerable<Superbowl> mostAttended;
         IEnumerable<Superbowl> mostHosted;
         IEnumerable<Superbowl> MVPs;
+        string mostLosingCoach;
+        string mostWinningCoach;
+        string mostWins;
+        string mostLosses;
+        Superbowl biggestDiff;
+        int averageAttendace;
+
         //class construcor
         public SuperbowlQuerries(List<Superbowl> superbowls)
         {
@@ -21,7 +28,12 @@ namespace Project_Two
             this.mostAttended = superbowls.OrderByDescending(attend => attend.Attendance).Take(5);
             this.mostHosted = superbowls.GroupBy(superbowl => superbowl.State).OrderByDescending(hostGroup => hostGroup.Count()).SelectMany(host => host);
             this.MVPs = superbowls.GroupBy(superbowl => superbowl.Mvp).OrderByDescending(mvpGroup => mvpGroup.Count()).SelectMany(mvp => mvp);
-            
+            this.mostLosingCoach = superbowls.GroupBy(superbowl => superbowl.LosingCoach).OrderByDescending(losingCoach => losingCoach.Count()).SelectMany(team => team).First().LosingCoach;
+            this.mostWinningCoach = superbowls.GroupBy(superbowl => superbowl.WinningCoach).OrderByDescending(winningCoach => winningCoach.Count()).SelectMany(team => team).First().WinningCoach;
+            this.mostWins = superbowls.GroupBy(superbowl => superbowl.WinningTeamName).OrderByDescending(winngingTeam => winngingTeam.Count()).SelectMany(team => team).First().WinningTeamName;
+            this.mostLosses = superbowls.GroupBy(superbowl => superbowl.LosingTeamName).OrderByDescending(losingTeam => losingTeam.Count()).SelectMany(team => team).First().LosingTeamName;
+            this.biggestDiff = superbowls.OrderByDescending(superbowl => superbowl.WinningPoints - superbowl.LosingPoints).First();
+            this.averageAttendace = superbowls.Select(superbowl => superbowl.Attendance).Sum() / superbowls.Count();
         }
         
         public void GenerateTextFile()
@@ -46,7 +58,7 @@ namespace Project_Two
                 writer.WriteLine(new string('-', 120));
                 foreach (Superbowl bowl in this.winners)
                 {
-                    writer.WriteLine(bowl.Teams[0].TeamName.PadRight(25) + bowl.Year.PadRight(15) + bowl.Teams[0].Qb.PadRight(25) + bowl.Teams[0].Coach.PadRight(25) + bowl.Mvp.PadRight(25) + (bowl.Teams[0].Points - bowl.Teams[1].Points) + " pts");
+                    writer.WriteLine(bowl.WinningTeamName.PadRight(25) + bowl.Year.PadRight(15) + bowl.WinningQb.PadRight(25) + bowl.WinningCoach.PadRight(25) + bowl.Mvp.PadRight(25) + (bowl.WinningPoints - bowl.LosingPoints) + " pts");
                 }
                 writer.WriteLine(new string('=', 120));
                 writer.WriteLine("Top 5 Attended SuperBowls".PadLeft("Top 5 Attended SuperBowls".Count() + 3));
@@ -55,7 +67,7 @@ namespace Project_Two
                 writer.WriteLine(new string('-', 120));
                 foreach (Superbowl bowl in this.mostAttended)
                 {
-                    writer.WriteLine(bowl.Year.PadRight(15) + bowl.Teams[0].TeamName.PadRight(25) + bowl.Teams[1].TeamName.PadRight(25) + bowl.City.PadRight(15) + bowl.State.PadRight(15) + bowl.Stadium.PadRight(15));
+                    writer.WriteLine(bowl.Year.PadRight(15) + bowl.WinningTeamName.PadRight(25) + bowl.LosingTeamName.PadRight(25) + bowl.City.PadRight(15) + bowl.State.PadRight(15) + bowl.Stadium.PadRight(15));
                 }
             }
 
@@ -76,6 +88,9 @@ namespace Project_Two
 
         public void GenerateHTMLFile()
         {
+            
+            Console.WriteLine();
+
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
 
@@ -115,22 +130,22 @@ namespace Project_Two
             string listofwinners = "";
             foreach(Superbowl bowl in winners)
             {
-                listofwinners += "<tr>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Year + "</td>" + "<td>" + bowl.Teams[0].Qb + "</td>" + "<td>" + bowl.Teams[0].Coach + "</td>" + "<td>" + bowl.Mvp + "</td>" + "<td>" + (bowl.Teams[0].Points - bowl.Teams[1].Points) + " pts</td>" + "</tr>";
+                listofwinners += "<tr>" + "<td>" + bowl.WinningTeamName + "</td>" + "<td>" + bowl.Year + "</td>" + "<td>" + bowl.WinningQb + "</td>" + "<td>" + bowl.WinningCoach + "</td>" + "<td>" + bowl.Mvp + "</td>" + "<td>" + (bowl.WinningPoints - bowl.LosingPoints) + " pts</td>" + "</tr>";
             }
             string listofattended = "";
             foreach (Superbowl bowl in mostAttended)
             {
-                listofattended += "<tr>" + "<td>" +  bowl.Year + "</td>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Teams[1].TeamName + "</td>" + "<td>" + bowl.City + "</td>" + "<td>" + bowl.State + "</td>" + "<td>" + bowl.Stadium + "</td>" + "</tr>";
+                listofattended += "<tr>" + "<td>" +  bowl.Year + "</td>" + "<td>" + bowl.WinningTeamName + "</td>" + "<td>" + bowl.LosingTeamName + "</td>" + "<td>" + bowl.City + "</td>" + "<td>" + bowl.State + "</td>" + "<td>" + bowl.Stadium + "</td>" + "</tr>";
             }
             string listofhosts = "";
             foreach (Superbowl bowl in mostHosted)
             {
-                listofhosts += "<tr>" + "<td>" + bowl.State + "</td>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Teams[1].TeamName + "</td>" + "</tr>";
+                listofhosts += "<tr>" + "<td>" + bowl.State + "</td>" + "<td>" + bowl.WinningTeamName + "</td>" + "<td>" + bowl.LosingTeamName+ "</td>" + "</tr>";
             }
             string listofmvps = "";
             foreach (Superbowl bowl in MVPs)
             {
-                listofmvps += "<tr>" + "<td>" + bowl.Mvp + "</td>" + "<td>" + bowl.Teams[0].TeamName + "</td>" + "<td>" + bowl.Teams[1].TeamName + "</td>"+"</tr>";
+                listofmvps += "<tr>" + "<td>" + bowl.Mvp + "</td>" + "<td>" + bowl.WinningTeamName + "</td>" + "<td>" + bowl.LosingTeamName + "</td>"+"</tr>";
             }
 
             //grabs the html template and replaces placeholders with superbowl information
@@ -139,6 +154,7 @@ namespace Project_Two
             theFile = theFile.Replace("listofattended", listofattended);
             theFile = theFile.Replace("listofhosts", listofhosts);
             theFile = theFile.Replace("listofmvps", listofmvps);
+            theFile = theFile.Replace("mostLosingCoach", mostLosingCoach);
             return theFile;
         }
     }
