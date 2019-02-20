@@ -42,9 +42,18 @@ namespace Project_Two
         
         public void GenerateTextFile()
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+             
 
             //asks user to name file
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("Please enter the path you would like to put your file (desktop by default): ");
+            Console.Write(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\");
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\" + Console.ReadLine();
+            if(path == Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\")
+            {
+                path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            }
             Console.Clear();
             Console.CursorVisible = true;
             Console.WriteLine("Please name your text file:");
@@ -53,11 +62,105 @@ namespace Project_Two
             path = Path.Combine(path, fileName);
 
             //writes to file
+            try
+            {
+                WriteTextFile(path);
+
+                //redirects user to the text file
+                System.Diagnostics.Process openTXT = new System.Diagnostics.Process
+                {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo(path)
+                    {
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Maximized,
+                        UseShellExecute = true
+                    }
+                };
+
+                openTXT.Start();
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("The path you entered does not exist");
+                Console.WriteLine("\nPress any key to exit");
+                Console.ReadKey();
+            }
+            
+
+            /*
+            void CreateTitle(string title,params string[] subtitles)
+            {
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine(title.PadLeft(90 + "Most Common MVPs".Length / 2));
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Most Valuable Player".PadRight(15) + "Winning Team".PadRight(25) + "Losing Team".PadRight(25));
+                writer.WriteLine(new string('-', 189));
+            }*/
+        }
+
+        
+
+        public void GenerateHTMLFile()
+        {
+            
+            Console.WriteLine();
+            
+            //asks user to name file
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("Please enter the path you would like to put your file (desktop by default): ");
+            Console.Write(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\");
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\" + Console.ReadLine();
+            if (path == Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\")
+            {
+                path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            }
+            Console.Clear();
+            Console.CursorVisible = true;
+            Console.WriteLine("Please name your html file:");
+            string fileName = Console.ReadLine() + ".html";
+            if(fileName == ".html") { fileName = "SuperbowlStats.html"; }//if user didn't name file, gives default name
+            path = Path.Combine(path, fileName);
+
+            //writes to file
+            try
+            {
+                using (FileStream fs = new FileStream(path, FileMode.Create))
+                {
+                    using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
+                    {
+                        w.Write(CreateHTML());
+
+                    }
+                }
+
+                //redirects user to the html file
+                System.Diagnostics.Process openHTML = new System.Diagnostics.Process
+                {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo(path)
+                    {
+                        UseShellExecute = true
+                    }
+                };
+
+                openHTML.Start();
+            }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("The path you entered does not exist");
+                Console.WriteLine("\nPress any key to exit");
+                Console.ReadKey();
+            }
+        }
+
+        private void WriteTextFile(string path)
+        {
             using (StreamWriter writer = File.CreateText(path))
             {
                 writer.WriteLine(new string('=', 189));
-                writer.WriteLine("Winners".PadLeft(90 + "Winners".Length/2));
-                writer.WriteLine(new string('=',189));
+                writer.WriteLine("Winners".PadLeft(90 + "Winners".Length / 2));
+                writer.WriteLine(new string('=', 189));
                 writer.WriteLine("Team".PadRight(25) + "Year".PadRight(15) + "Quarterback".PadRight(30) + "Coach".PadRight(25) + "MVP".PadRight(30) + "Won by");
                 writer.WriteLine(new string('-', 189));
                 foreach (Superbowl bowl in this.winners)
@@ -118,69 +221,6 @@ namespace Project_Two
                 writer.WriteLine(new string('-', 189));
                 writer.WriteLine(averageAttendence);
             }
-
-
-            //redirects user to the text file
-            System.Diagnostics.Process openTXT = new System.Diagnostics.Process
-            {
-                StartInfo = new System.Diagnostics.ProcessStartInfo(path)
-                {
-                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Maximized,
-                    UseShellExecute = true
-                }
-            };
-
-            openTXT.Start();
-
-            /*
-            void CreateTitle(string title,params string[] subtitles)
-            {
-                writer.WriteLine(new string('=', 189));
-                writer.WriteLine(title.PadLeft(90 + "Most Common MVPs".Length / 2));
-                writer.WriteLine(new string('=', 189));
-                writer.WriteLine("Most Valuable Player".PadRight(15) + "Winning Team".PadRight(25) + "Losing Team".PadRight(25));
-                writer.WriteLine(new string('-', 189));
-            }*/
-        }
-
-        
-
-        public void GenerateHTMLFile()
-        {
-            
-            Console.WriteLine();
-
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-
-            //asks user to name file
-            Console.Clear();
-            Console.CursorVisible = true;
-            Console.WriteLine("Please name your html file:");
-            string fileName = Console.ReadLine() + ".html";
-            if(fileName == ".html") { fileName = "SuperbowlStats.html"; }//if user didn't name file, gives default name
-            path = Path.Combine(path, fileName);
-
-            //writes to file
-            using (FileStream fs = new FileStream(path, FileMode.Create))
-            {
-                using (StreamWriter w = new StreamWriter(fs, Encoding.UTF8))
-                {
-                    w.Write(CreateHTML());
-                    
-                }
-            }
-
-            //redirects user to the html file
-            System.Diagnostics.Process openHTML = new System.Diagnostics.Process
-            {
-                StartInfo = new System.Diagnostics.ProcessStartInfo(path)
-                {
-                    UseShellExecute = true
-                }
-            };
-            
-            openHTML.Start();
         }
 
         private string CreateHTML()

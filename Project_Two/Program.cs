@@ -45,7 +45,7 @@ namespace Project_Two
             //Displays a prompt
             void DisplayPrompt()
             {
-                Console.SetWindowSize(70, 10);
+                Console.SetWindowSize(75, 10);
                 Console.SetCursorPosition(10, 2);
                 Console.WriteLine("Welcome to the superbowl statistic file creator");
                 Console.SetCursorPosition(5, 3);
