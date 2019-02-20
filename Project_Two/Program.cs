@@ -24,6 +24,7 @@ namespace Project_Two
             {
                 superbowls.Add(new Superbowl(row.Split(','))); //passed through as an array of strings
             }
+
             //creates a new query object passing the superbowl objects through
             SuperbowlQuerries queries = new SuperbowlQuerries(superbowls);
 

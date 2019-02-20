@@ -21,18 +21,21 @@ namespace Project_Two
         public string LosingQb { get; }
         public string LosingTeamName { get; }
         public int LosingPoints { get; }
+
         //Constructor receives one line from the csv file as a list of strings.
         //knowing the order its in, it creates an instance of the superbowl class.
         public Superbowl(string[] data)
         {
+            //These lines of code handle multiple names (i.e. two mvp winners in one year)
             for(int i = 0; i < data.Length; i++)
             {
                 string[] tempStrings = data[i].Split(" ");
-                if (tempStrings.Length > 3)
+                if (tempStrings.Length > 3 && i < 12)
                 {
-                    data[i] = tempStrings[0] + tempStrings[1] + " & " + tempStrings[2] + tempStrings[3];
+                    data[i] = tempStrings[0] + " " + tempStrings[1] + " & " + tempStrings[2] + " " + tempStrings[3];
                 }
             }
+
             this.Year = data[0];
             this.SuperbowlTitle = data[1];
             this.Attendance = Convert.ToInt32(data[2]);

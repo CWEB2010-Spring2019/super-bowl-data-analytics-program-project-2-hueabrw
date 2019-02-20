@@ -19,21 +19,25 @@ namespace Project_Two
         string mostWins;
         string mostLosses;
         Superbowl biggestDiff;
-        int averageAttendace;
+        int averageAttendence;
 
         //class construcor
         public SuperbowlQuerries(List<Superbowl> superbowls)
         {
+            //tabled info
             this.winners = superbowls;
             this.mostAttended = superbowls.OrderByDescending(attend => attend.Attendance).Take(5);
             this.mostHosted = superbowls.GroupBy(superbowl => superbowl.State).OrderByDescending(hostGroup => hostGroup.Count()).SelectMany(host => host);
             this.MVPs = superbowls.GroupBy(superbowl => superbowl.Mvp).OrderByDescending(mvpGroup => mvpGroup.Count()).SelectMany(mvp => mvp);
+            
+
+            //other info
             this.mostLosingCoach = superbowls.GroupBy(superbowl => superbowl.LosingCoach).OrderByDescending(losingCoach => losingCoach.Count()).SelectMany(team => team).First().LosingCoach;
             this.mostWinningCoach = superbowls.GroupBy(superbowl => superbowl.WinningCoach).OrderByDescending(winningCoach => winningCoach.Count()).SelectMany(team => team).First().WinningCoach;
             this.mostWins = superbowls.GroupBy(superbowl => superbowl.WinningTeamName).OrderByDescending(winngingTeam => winngingTeam.Count()).SelectMany(team => team).First().WinningTeamName;
             this.mostLosses = superbowls.GroupBy(superbowl => superbowl.LosingTeamName).OrderByDescending(losingTeam => losingTeam.Count()).SelectMany(team => team).First().LosingTeamName;
             this.biggestDiff = superbowls.OrderByDescending(superbowl => superbowl.WinningPoints - superbowl.LosingPoints).First();
-            this.averageAttendace = superbowls.Select(superbowl => superbowl.Attendance).Sum() / superbowls.Count();
+            this.averageAttendence = superbowls.Select(superbowl => superbowl.Attendance).Sum() / superbowls.Count();
         }
         
         public void GenerateTextFile()
@@ -51,24 +55,68 @@ namespace Project_Two
             //writes to file
             using (StreamWriter writer = File.CreateText(path))
             {
-                writer.WriteLine(new string('=', 120));
-                writer.WriteLine("Winners".PadLeft(10));
-                writer.WriteLine(new string('=',120));
-                writer.WriteLine("Team".PadRight(25) + "Year".PadRight(15) + "Quarterback".PadRight(25) + "Coach".PadRight(25) + "MVP".PadRight(25) + "Won by");
-                writer.WriteLine(new string('-', 120));
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Winners".PadLeft(90 + "Winners".Length/2));
+                writer.WriteLine(new string('=',189));
+                writer.WriteLine("Team".PadRight(25) + "Year".PadRight(15) + "Quarterback".PadRight(30) + "Coach".PadRight(25) + "MVP".PadRight(30) + "Won by");
+                writer.WriteLine(new string('-', 189));
                 foreach (Superbowl bowl in this.winners)
                 {
-                    writer.WriteLine(bowl.WinningTeamName.PadRight(25) + bowl.Year.PadRight(15) + bowl.WinningQb.PadRight(25) + bowl.WinningCoach.PadRight(25) + bowl.Mvp.PadRight(25) + (bowl.WinningPoints - bowl.LosingPoints) + " pts");
+                    writer.WriteLine(bowl.WinningTeamName.PadRight(25) + bowl.Year.PadRight(15) + bowl.WinningQb.PadRight(30) + bowl.WinningCoach.PadRight(25) + bowl.Mvp.PadRight(30) + (bowl.WinningPoints - bowl.LosingPoints) + " pts");
                 }
-                writer.WriteLine(new string('=', 120));
-                writer.WriteLine("Top 5 Attended SuperBowls".PadLeft("Top 5 Attended SuperBowls".Count() + 3));
-                writer.WriteLine(new string('=', 120));
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Top 5 Attended SuperBowls".PadLeft(90 + "Top 5 Attended SuperBowls".Length / 2));
+                writer.WriteLine(new string('=', 189));
                 writer.WriteLine("Year".PadRight(15) + "Winning Team".PadRight(25) + "Losing Team".PadRight(25) + "City".PadRight(15) + "State".PadRight(15) + "Stadium".PadRight(15));
-                writer.WriteLine(new string('-', 120));
+                writer.WriteLine(new string('-', 189));
                 foreach (Superbowl bowl in this.mostAttended)
                 {
                     writer.WriteLine(bowl.Year.PadRight(15) + bowl.WinningTeamName.PadRight(25) + bowl.LosingTeamName.PadRight(25) + bowl.City.PadRight(15) + bowl.State.PadRight(15) + bowl.Stadium.PadRight(15));
                 }
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("States that Hosted the most".PadLeft(90 + "States that Hosted the most".Length / 2));
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("City".PadRight(25) + "State".PadRight(25) + "Stadium".PadRight(25));
+                writer.WriteLine(new string('-', 189));
+                foreach (Superbowl bowl in this.mostHosted)
+                {
+                    writer.WriteLine(bowl.City.PadRight(25) + bowl.State.PadRight(25) + bowl.Stadium.PadRight(15));
+                }
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Most Common MVPs".PadLeft(90 + "Most Common MVPs".Length / 2));
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Most Valuable Player".PadRight(30) + "Winning Team".PadRight(25) + "Losing Team".PadRight(25));
+                writer.WriteLine(new string('-', 189));
+                foreach (Superbowl bowl in this.MVPs)
+                {
+                    writer.WriteLine(bowl.Mvp.PadRight(30) + bowl.WinningTeamName.PadRight(25) + bowl.LosingTeamName.PadRight(25));
+                }
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Other Statistics".PadLeft(90 + "Other Statistics".Length / 2));
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Coach with the most Losses:");
+                writer.WriteLine(new string('-', 189));
+                writer.WriteLine(mostLosingCoach);
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Coach with the most wins:");
+                writer.WriteLine(new string('-', 189));
+                writer.WriteLine(mostWinningCoach);
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Team with the most Losses:");
+                writer.WriteLine(new string('-', 189));
+                writer.WriteLine(mostLosses);
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Team with the most wins:");
+                writer.WriteLine(new string('-', 189));
+                writer.WriteLine(mostWins);
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Greatest point difference in a Superbowl:");
+                writer.WriteLine(new string('-', 189));
+                writer.WriteLine("Superbowl " + biggestDiff.SuperbowlTitle + " with a " + (biggestDiff.WinningPoints - biggestDiff.LosingPoints) + " point difference");
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Average Attendence of Superbowls:");
+                writer.WriteLine(new string('-', 189));
+                writer.WriteLine(averageAttendence);
             }
 
 
@@ -77,11 +125,22 @@ namespace Project_Two
             {
                 StartInfo = new System.Diagnostics.ProcessStartInfo(path)
                 {
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Maximized,
                     UseShellExecute = true
                 }
             };
 
             openTXT.Start();
+
+            /*
+            void CreateTitle(string title,params string[] subtitles)
+            {
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine(title.PadLeft(90 + "Most Common MVPs".Length / 2));
+                writer.WriteLine(new string('=', 189));
+                writer.WriteLine("Most Valuable Player".PadRight(15) + "Winning Team".PadRight(25) + "Losing Team".PadRight(25));
+                writer.WriteLine(new string('-', 189));
+            }*/
         }
 
         
@@ -140,7 +199,7 @@ namespace Project_Two
             string listofhosts = "";
             foreach (Superbowl bowl in mostHosted)
             {
-                listofhosts += "<tr>" + "<td>" + bowl.State + "</td>" + "<td>" + bowl.WinningTeamName + "</td>" + "<td>" + bowl.LosingTeamName+ "</td>" + "</tr>";
+                listofhosts += "<tr>" + "<td>" + bowl.City + "</td>" + "<td>" + bowl.State + "</td>" + "<td>" + bowl.Stadium+ "</td>" + "</tr>";
             }
             string listofmvps = "";
             foreach (Superbowl bowl in MVPs)
@@ -155,6 +214,11 @@ namespace Project_Two
             theFile = theFile.Replace("listofhosts", listofhosts);
             theFile = theFile.Replace("listofmvps", listofmvps);
             theFile = theFile.Replace("mostLosingCoach", mostLosingCoach);
+            theFile = theFile.Replace("mostWinningCoach", mostWinningCoach);
+            theFile = theFile.Replace("mostLosses", mostLosses);
+            theFile = theFile.Replace("mostWins", mostWins);
+            theFile = theFile.Replace("biggestDiff", "Superbowl " + biggestDiff.SuperbowlTitle + " with a " + (biggestDiff.WinningPoints - biggestDiff.LosingPoints).ToString() + " point difference");
+            theFile = theFile.Replace("averageAttendence", averageAttendence.ToString());
             return theFile;
         }
     }
