@@ -27,8 +27,8 @@ namespace Project_Two
             //tabled info
             this.winners = superbowls;
             this.mostAttended = superbowls.OrderByDescending(attend => attend.Attendance).Take(5);
-            this.mostHosted = superbowls.GroupBy(superbowl => superbowl.State).OrderByDescending(hostGroup => hostGroup.Count()).SelectMany(host => host);
-            this.MVPs = superbowls.GroupBy(superbowl => superbowl.Mvp).OrderByDescending(mvpGroup => mvpGroup.Count()).SelectMany(mvp => mvp);
+            this.mostHosted = superbowls.GroupBy(superbowl => superbowl.State).OrderByDescending(hostGroup => hostGroup.Count()).First().Select(x => x);
+            this.MVPs = superbowls.GroupBy(superbowl => superbowl.Mvp).Where(group => group.Count() > 1).OrderByDescending(mvpGroup => mvpGroup.Count()).SelectMany(mvp => mvp);
             
 
             //other info
